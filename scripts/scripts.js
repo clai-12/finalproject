@@ -36,7 +36,6 @@ closeButtons.forEach(button => {
 
 // Depth counter functionality
 const depthDisplay = document.getElementById('depth-display');
-const allZones = document.querySelector('.all-zones');
 const zones = [
   { id: 'sunlit', minDepth: 0, maxDepth: 200 },
   { id: 'twilight', minDepth: 200, maxDepth: 1000 },
@@ -45,35 +44,58 @@ const zones = [
   { id: 'hadal', minDepth: 6000, maxDepth: 11000 }
 ];
 
-function updateDepth() {
-  const scrollY = allZones.scrollTop;
-  const viewportHeight = allZones.clientHeight;
+let targetDepth = 0;
+let displayedDepth = 0;
+let animationFrame = null;
+
+function computeDepth() {
+  const scrollY = window.scrollY;
+  const viewportHeight = window.innerHeight;
   const viewportCenter = scrollY + viewportHeight / 2;
   
-  let currentDepth = 0;
+  let depth = 0;
   
   for (const zone of zones) {
     const section = document.getElementById(zone.id);
     if (section) {
-      const rect = section.getBoundingClientRect();
-      const sectionTop = rect.top - allZones.getBoundingClientRect().top + scrollY;
-      const sectionHeight = rect.height;
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.offsetHeight;
       const sectionBottom = sectionTop + sectionHeight;
       
-      // Check if viewport center is within this section
       if (viewportCenter >= sectionTop && viewportCenter < sectionBottom) {
-        // Calculate progress through the section (0 to 1)
         const progress = (viewportCenter - sectionTop) / sectionHeight;
-        currentDepth = zone.minDepth + (zone.maxDepth - zone.minDepth) * progress;
+        depth = zone.minDepth + (zone.maxDepth - zone.minDepth) * progress;
         break;
       }
     }
   }
-  
-  if (depthDisplay) {
-    depthDisplay.textContent = Math.round(currentDepth) + 'm';
+
+  targetDepth = Math.round(depth);
+}
+
+function renderDepth() {
+  if (!depthDisplay) return;
+
+  const delta = targetDepth - displayedDepth;
+  if (Math.abs(delta) < 0.5) {
+    displayedDepth = targetDepth;
+    depthDisplay.textContent = `${displayedDepth}m`;
+    animationFrame = null;
+    return;
+  }
+
+  displayedDepth += delta * 0.18;
+  depthDisplay.textContent = `${Math.round(displayedDepth)}m`;
+  animationFrame = requestAnimationFrame(renderDepth);
+}
+
+function scheduleDepthUpdate() {
+  computeDepth();
+  if (!animationFrame) {
+    animationFrame = requestAnimationFrame(renderDepth);
   }
 }
 
-allZones.addEventListener('scroll', updateDepth);
-updateDepth(); // initial call
+window.addEventListener('scroll', scheduleDepthUpdate);
+window.addEventListener('resize', scheduleDepthUpdate);
+scheduleDepthUpdate(); // initial call

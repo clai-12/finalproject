@@ -10,10 +10,14 @@
     scroll-behavior: smooth;
 }
 
+html {
+    scroll-snap-type: y proximity;
+    }
+
 body {
     margin: 0;
     height: 100vh;
-    overflow: hidden;
+    overflow-x: hidden;
     font-family: 'Quicksand', Arial, sans-serif;
     text-wrap: pretty;
     color: #012b40;
@@ -27,7 +31,7 @@ a {
 /* HEADER/NAV BAR */
 
 nav {
-    background-color: aqua;
+    background-color: #2797ae;
      /* block */
     margin: 0; 
     /* position */
@@ -35,13 +39,14 @@ nav {
     top: 0;
     inline-size: 100vw;
     z-index: 200;
-    color: #002028;
+    color: white;
     
 }
 nav ul{
     inline-size: 100%; 
     display: flex;
-    padding-inline: 3rem;
+    align-items: center;
+    padding-inline: clamp(1rem,10vw,3rem);
     list-style: none;
 }
 
@@ -51,7 +56,13 @@ nav li {
 
 nav ul li:first-child {
     margin-inline: 0 auto;
+    font-size: 1.5rem;
+}
+
+@media screen and (min-width: 700px) {
+nav ul li:first-child {
     font-size: 2rem;
+}
 }
 
 nav ul li:last-child {
@@ -80,9 +91,13 @@ nav ul li:last-child {
 }
 
 .landing h1 {
-    font-size: 8em;
+    font-size: 8rem;
     font-family: 'Stack Sans Notch', Arial, sans-serif;
     text-wrap: balance;
+}
+
+.landing p {
+    font-size: 120%;
 }
 
 .landing-wrapper {
@@ -161,10 +176,9 @@ button {
 
 .depth-counter img {
     max-inline-size: 8rem;
-    shado
 }
 #depth-display {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-family: 'Sixtyfour', Arial, Helvetica, sans-serif;
     text-decoration: none;
     color: white;
@@ -184,14 +198,12 @@ button {
 /* sections */
 
 .all-zones {
-    height: 100vh;   
-    overflow-y: scroll;
-    scroll-snap-type: y proximity;
+    scroll-snap-type: none;
 }
 
 h1 {
     font-family: 'Stack Sans Notch', Arial, sans-serif;
-    font-size: 5rem;
+    font-size: clamp(3rem, 6vw, 5rem);
     margin-block-end: 0;
 }
 
@@ -204,8 +216,33 @@ section>p {
     margin-block-end: 6rem;
 }
 
-.species-buttons h2 {
+@media screen and (max-width: 700px) {
+    .species {
+        inline-size: clamp(60px, 25vw, 120px);
+        block-size: clamp(60px, 25vw, 120px);
+    }
+
+    .zone-buttons {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: clamp(0.5rem, 5vw, 1.5rem);
+    }
 }
+
+@media screen and (min-width: 700px) and (max-width: 1000px) {
+    .species {
+    max-inline-size: 15vw;
+    max-block-size: 15vw;
+    }
+
+}
+    
 
 
 @media screen and (min-width: 700px) {
@@ -213,7 +250,7 @@ section>p {
 }
 
 section {
-    height: 100%;
+    height: 100dvh;
     inline-size: 100%;
     display: flex;
     flex-direction: column;
@@ -226,26 +263,27 @@ section {
 .zone-buttons {
     list-style: none;
     padding: 0;
+    margin: 0 auto;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: no-wrap;
     align-items: center;
-    justify-content: center;
-    column-gap: 10rem;
-    row-gap: 2rem;
-
+    gap: clamp(1rem, 8vw, 6rem);
+    row-gap: 1rem;
+    max-width: 100%;
 }
 
 .species-buttons {
     display: flex;
     flex-direction: column;
     text-align: center;
+    align-items: center;
 }
 
 .species {
     padding: 0;
     margin: 0;
-    inline-size: 10rem;
-    block-size: 10rem;
+    inline-size: clamp(70px, 20vw, 160px);
+    block-size: clamp(70px, 20vw, 160px);
 }
 
 .species img {
