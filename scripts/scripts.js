@@ -98,4 +98,14 @@ function scheduleDepthUpdate() {
 
 window.addEventListener('scroll', scheduleDepthUpdate);
 window.addEventListener('resize', scheduleDepthUpdate);
+
+// Depth counter drawer toggle
+const depthToggleBtn = document.getElementById('depth-toggle-btn');
+const depthCounter = document.querySelector('.depth-counter');
+
+if (depthToggleBtn && depthCounter) {
+  depthToggleBtn.addEventListener('click', function() {
+    depthCounter.classList.toggle('open');
+  });
+}
 scheduleDepthUpdate(); // initial call
