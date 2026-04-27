@@ -91,7 +91,7 @@ nav ul li:last-child {
 }
 
 .landing h1 {
-    font-size: 8rem;
+    font-size: clamp(2rem, 8vw + 1rem, 8rem);
     font-family: 'Stack Sans Notch', Arial, sans-serif;
     text-wrap: balance;
 }
