@@ -348,6 +348,7 @@ section {
     margin: 0;
     inline-size: clamp(70px, 20vw, 160px);
     block-size: clamp(70px, 20vw, 160px);
+    border: 0.3em solid white;
 }
 
 .species img {
