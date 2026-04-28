@@ -59,6 +59,11 @@ nav ul li:first-child {
     font-size: 1.5rem;
 }
 
+nav a:hover {
+    color:#012b40;
+    transition: ease-in 0.1s;
+}
+
 @media screen and (min-width: 700px) {
 nav ul li:first-child {
     font-size: 2rem;
@@ -193,6 +198,13 @@ button {
 
 .depth-counter img {
     max-inline-size: 8rem;
+}
+
+.depth-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
 }
 #depth-display {
     font-size: 2.5rem;
