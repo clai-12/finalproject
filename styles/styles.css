@@ -234,7 +234,7 @@ button {
     #sunlit {
         margin-block-start: 3rem;
     }
-
+}
 
 @media screen and (min-width: 700px) {
 .depth-toggle-btn {
